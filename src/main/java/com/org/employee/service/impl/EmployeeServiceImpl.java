@@ -72,6 +72,7 @@ public class EmployeeServiceImpl implements EmployeeService
 	@Override
 	public EmployeeResponse getEmployeeById(long id) 
 	{
+		System.out.println("getEmployeeById methood ::"+id);
 		Optional<Employee> optionalEmployee = empRepository.findByEmpId(id);
 		if(optionalEmployee.isEmpty()) 
 			throw new EmployeeNotFoundException("Employee not found for the given employee id :: "+id);
