@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.org.employee.entity.Employee;
@@ -130,5 +134,15 @@ public class EmployeeServiceImpl implements EmployeeService
 		List<EmployeeResponse> employeeResponseList = constrctEmployeeResponseList(employeeList);
 		System.out.println("employeeResponseList :: "+employeeResponseList.size());
 		return employeeResponseList;
+	}
+
+	@Override
+	public Page<EmployeeResponse> getPage(Integer pageNo, Integer size) 
+	{
+		Pageable pageable = PageRequest.of(pageNo,size);
+		Page<Employee> page = empRepository.findAll(pageable);
+		List<Employee> employeeList = page.getContent();
+		List<EmployeeResponse> employeeResponseList = constrctEmployeeResponseList(employeeList);
+		return new PageImpl<EmployeeResponse>(employeeResponseList,pageable,page.getTotalElements());
 	}
 }

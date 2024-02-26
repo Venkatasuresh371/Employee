@@ -2,6 +2,8 @@ package com.org.employee.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.org.employee.request.EmployeeRequest;
 import com.org.employee.response.EmployeeResponse;
 
@@ -20,5 +22,7 @@ public interface EmployeeService
 	public String deleteEmployee(long id);
 	
 	public List<EmployeeResponse> searchEmployees(String query);
+	
+	public Page<EmployeeResponse> getPage(Integer pageNo,Integer size);
 
 }
