@@ -35,6 +35,7 @@ public class EmployeeController
 	@PostMapping("/saveemployee")
 	public ResponseEntity<EmployeeResponse> saveEmployee(@Valid @RequestBody EmployeeRequest empRequest)
 	{
+		System.out.println("Employee Request ----> "+empRequest);
 		if(empRequest != null)
 		{
 			EmployeeResponse employeeResponse = empService.saveEmployee(empRequest);
@@ -55,9 +56,10 @@ public class EmployeeController
 	@GetMapping("/employeebyid/{id}")
 	public ResponseEntity<EmployeeResponse> getEmployeeById(@PathVariable long id)
 	{
+		System.out.println("Employee Id ---> "+id);
 		EmployeeResponse employeeResponse = empService.getEmployeeById(id);
 		logInfo.info("Employee Response :: "+employeeResponse);
-		return new ResponseEntity<EmployeeResponse>(employeeResponse,HttpStatus.FOUND);
+		return new ResponseEntity<EmployeeResponse>(employeeResponse,HttpStatus.OK);
 	}
 	
 	@GetMapping("/employeebyname/{name}")
@@ -65,7 +67,7 @@ public class EmployeeController
 	{
 		EmployeeResponse employeeResponse = empService.getEmployeeByName(name);
 		logInfo.info("Employee Response :: "+employeeResponse);
-		return new ResponseEntity<EmployeeResponse>(employeeResponse,HttpStatus.FOUND);
+		return new ResponseEntity<EmployeeResponse>(employeeResponse,HttpStatus.OK);
 	}
 	
 	@PutMapping("/updateemployee/{id}")
@@ -83,15 +85,15 @@ public class EmployeeController
 		return new ResponseEntity<String>(string,HttpStatus.OK);
 	}
 	
-	@GetMapping("/search/{query}")
-	public ResponseEntity<List<EmployeeResponse>> searchEmployees(@PathVariable String query)
+	@GetMapping("/search")
+	public ResponseEntity<List<EmployeeResponse>> searchEmployees(@RequestParam String query)
 	{
 		List<EmployeeResponse> employeeResponse = empService.searchEmployees(query);
 		logInfo.info("EmployeeResponse :: "+employeeResponse);
-		return new ResponseEntity<List<EmployeeResponse>>(employeeResponse,HttpStatus.FOUND);
+		return new ResponseEntity<List<EmployeeResponse>>(employeeResponse,HttpStatus.OK);
 	}
 	
-	@GetMapping("/getemployeebypage/")
+	@GetMapping("/getemployeebypage")
 	public ResponseEntity<Page<EmployeeResponse>> getEmployeeByPage(@RequestParam Integer PageNo,@RequestParam Integer PageSize)
 	{
 		Page<EmployeeResponse> page = empService.getPage(PageNo, PageSize);

@@ -28,6 +28,7 @@ public class EmployeeServiceImpl implements EmployeeService
 	@Override
 	public EmployeeResponse saveEmployee(EmployeeRequest empRequest)
 	{
+		System.out.println("Employee Request in service *** "+empRequest);
 		Employee employee = constructEmployee(empRequest);
 		Employee saveEmployee = empRepository.save(employee);
 		EmployeeResponse employeeResponse = constructEmployeeResponse(saveEmployee);
