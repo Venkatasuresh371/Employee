@@ -141,6 +141,7 @@ public class EmployeeServiceImpl implements EmployeeService
 	{
 		Pageable pageable = PageRequest.of(pageNo,size);
 		Page<Employee> page = empRepository.findAll(pageable);
+		System.out.println(page.getSize());
 		List<Employee> employeeList = page.getContent();
 		List<EmployeeResponse> employeeResponseList = constrctEmployeeResponseList(employeeList);
 		return new PageImpl<EmployeeResponse>(employeeResponseList,pageable,page.getTotalElements());
