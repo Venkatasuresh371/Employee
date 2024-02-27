@@ -3,23 +3,20 @@ package com.org.employee.request;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotEmpty;
 
 public class EmployeeRequest {
 	
-	@NotBlank(message = "Name should not be blank")
+	@NotEmpty(message = "name Should not be empty")
 	private String name;
 
-	@NotBlank(message = "Designation should not be blank")
+	@NotEmpty(message = "Designation Should not be empty")
 	private String designation;
-
-	@Pattern(regexp = "^[0-9]{10}$")
-	@Size(min = 10, max = 10)
+	
 	private long contactNumber;
 
 	@NotBlank(message = "Joining Date should not be blank")
-//	@DateTimeFormat(pattern = "YYYY-MM-DD")
+	@DateTimeFormat(pattern = "YYYY-MM-DD")
 	private String joiningDate;
 
 	EmployeeRequest() {
