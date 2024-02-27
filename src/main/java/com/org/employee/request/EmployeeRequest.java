@@ -1,7 +1,5 @@
 package com.org.employee.request;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 
@@ -16,7 +14,6 @@ public class EmployeeRequest {
 	private long contactNumber;
 
 	@NotBlank(message = "Joining Date should not be blank")
-	@DateTimeFormat(pattern = "YYYY-MM-DD")
 	private String joiningDate;
 
 	EmployeeRequest() {
