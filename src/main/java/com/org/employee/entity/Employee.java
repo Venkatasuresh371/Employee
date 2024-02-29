@@ -79,4 +79,10 @@ public class Employee
 	{
 		this.joiningDate = joiningDate;
 	}
+
+	@Override
+	public String toString() {
+		return  "Employee [empId=" + empId + ", name=" + name + ", designation=" + designation + ", contactNumber="
+				+ contactNumber + ", joiningDate=" + joiningDate + "]";
+	}
 }

@@ -45,14 +45,14 @@ public class EmployeeServiceImpl implements EmployeeService
 	    return emp;
 	}
 
-	private EmployeeResponse constructEmployeeResponse(Employee saveEmployee)
+	private EmployeeResponse constructEmployeeResponse(Employee employee)
 	{
 		EmployeeResponse employeeResponse = new EmployeeResponse();
-		employeeResponse.setEmpId(saveEmployee.getempId());
-		employeeResponse.setName(saveEmployee.getName());
-		employeeResponse.setDesignation(saveEmployee.getDesignation());
-		employeeResponse.setContactNumber(saveEmployee.getContactNumber());
-		employeeResponse.setJoiningDate(String.valueOf(saveEmployee.getJoiningDate()));
+		employeeResponse.setEmpId(employee.getempId());
+		employeeResponse.setName(employee.getName());
+		employeeResponse.setDesignation(employee.getDesignation());
+		employeeResponse.setContactNumber(employee.getContactNumber());
+		employeeResponse.setJoiningDate(String.valueOf(employee.getJoiningDate()));
 		return employeeResponse;
 	}
 
