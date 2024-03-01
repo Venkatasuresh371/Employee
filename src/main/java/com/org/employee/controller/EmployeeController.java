@@ -29,13 +29,15 @@ import jakarta.validation.Valid;
 public class EmployeeController 
 {
 	private static final Logger logInfo = LoggerFactory.getLogger(EmployeeController.class);
+	
 	@Autowired
 	private EmployeeService empService;
 	
 	@PostMapping("/saveemployee")
 	public ResponseEntity<EmployeeResponse> saveEmployee(@Valid @RequestBody EmployeeRequest empRequest)
 	{
-		System.out.println("Employee Request ----> "+empRequest);
+		logInfo.info("Employee Request ----> "+empRequest);
+		
 		if(empRequest != null)
 		{
 			EmployeeResponse employeeResponse = empService.saveEmployee(empRequest);
@@ -94,9 +96,9 @@ public class EmployeeController
 	}
 	
 	@GetMapping("/getemployeebypage")
-	public ResponseEntity<Page<EmployeeResponse>> getEmployeeByPage(@RequestParam Integer PageNo,@RequestParam Integer PageSize)
+	public ResponseEntity<Page<EmployeeResponse>> getEmployeeByPage(@RequestParam Integer pageNo,@RequestParam Integer pageSize)
 	{
-		Page<EmployeeResponse> page = empService.getPage(PageNo, PageSize);
+		Page<EmployeeResponse> page = empService.getPage(pageNo, pageSize);
 		return new ResponseEntity<Page<EmployeeResponse>>(page,HttpStatus.OK);
 	}
 }

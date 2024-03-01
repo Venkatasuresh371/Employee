@@ -3,8 +3,9 @@ package com.org.employee.service.impl;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -22,13 +23,15 @@ import com.org.employee.service.EmployeeService;
 @Service
 public class EmployeeServiceImpl implements EmployeeService 
 {
+	private static final Logger logInfo = LoggerFactory.getLogger(EmployeeServiceImpl.class);
+	
 	@Autowired
 	private EmployeeRepository empRepository;
 
 	@Override
 	public EmployeeResponse saveEmployee(EmployeeRequest empRequest)
 	{
-		System.out.println("Employee Request in service *** "+empRequest);
+		logInfo.info("Employee Request in service *** "+empRequest);
 		Employee employee = constructEmployee(empRequest);
 		Employee saveEmployee = empRepository.save(employee);
 		EmployeeResponse employeeResponse = constructEmployeeResponse(saveEmployee);
@@ -77,21 +80,18 @@ public class EmployeeServiceImpl implements EmployeeService
 	@Override
 	public EmployeeResponse getEmployeeById(long id) 
 	{
-		System.out.println("getEmployeeById methood ::---->"+id);
-		Optional<Employee> optionalEmployee = empRepository.findByEmpId(id);
-		if(optionalEmployee.isEmpty()) 
-			throw new EmployeeNotFoundException("Employee not found for the given employee id :: "+id);
-		EmployeeResponse employeeResponse = constructEmployeeResponse(optionalEmployee.get());
+		logInfo.info("getEmployeeById methood ::---->"+id);
+		Employee employee = empRepository.findByEmpId(id).orElseThrow(()->new EmployeeNotFoundException("Employee not found for the given employee id :: "+id));
+		EmployeeResponse employeeResponse = constructEmployeeResponse(employee);
 		return employeeResponse;
 	}
 
 	@Override
 	public EmployeeResponse getEmployeeByName(String name) 
 	{
-		Optional<Employee> optionalEmployee = empRepository.findByName(name);
-		if(optionalEmployee.isEmpty())
-			throw new EmployeeNotFoundException("Employee Not Found With Given Name :: "+name);
-		EmployeeResponse employeeResponse = constructEmployeeResponse(optionalEmployee.get());
+		Employee employee = empRepository.findByName(name)
+				.orElseThrow(()->new EmployeeNotFoundException("Employee Not Found With Given Name :: "+name));
+		EmployeeResponse employeeResponse = constructEmployeeResponse(employee);
 		return employeeResponse;
 	}
 
@@ -99,20 +99,16 @@ public class EmployeeServiceImpl implements EmployeeService
 	public EmployeeResponse updateEmployee(long id, EmployeeRequest empRequest) 
 	{
 		EmployeeResponse employeeResponse = null;
-		System.out.println("id:::: "+id);
-		Optional<Employee> optionalEmployee = empRepository.findByEmpId(id);
-		System.out.println("optionalEmployee :: "+optionalEmployee.get().getempId());
-		if(optionalEmployee.isEmpty())
-		{
-			throw new EmployeeNotFoundException("Employee not found for the given employee id :: "+id);
-		}
-		Employee employee = optionalEmployee.get();
+		logInfo.info("id:::: "+id);
+		Employee employee = empRepository.findByEmpId(id).orElseThrow(()->new EmployeeNotFoundException("Employee not found for the given employee id :: "+id));
+		logInfo.info("Employee :: "+employee.getempId());
 		employee.setName(empRequest.getName());
 		employee.setContactNumber(empRequest.getContactNumber());
 		employee.setDesignation(empRequest.getDesignation());
 			
 		Employee savedEmployee = empRepository.save(employee);
-		System.out.println("after updating savedEmployee :: "+savedEmployee.getName());
+		
+		logInfo.info("after updating savedEmployee :: "+savedEmployee.getName());
 		employeeResponse = constructEmployeeResponse(savedEmployee);
 		return employeeResponse;
 	}
@@ -120,20 +116,18 @@ public class EmployeeServiceImpl implements EmployeeService
 	@Override
 	public String deleteEmployee(long id) 
 	{
-		Optional<Employee> optionalEmployee = empRepository.findByEmpId(id);
-		if(optionalEmployee.isEmpty())
-			throw new EmployeeNotFoundException("Employee not found for the given employee id :: "+id);
-		empRepository.deleteById(id);
+		Employee employee = empRepository.findByEmpId(id).orElseThrow(()->new EmployeeNotFoundException("Employee not found for the given employee id :: "+id));
+		empRepository.delete(employee);
 		return "Employee Deleted Successfully";
 	}
 
 	@Override
 	public List<EmployeeResponse> searchEmployees(String query) 
 	{
-		System.out.println("input for searchEmployee method  :: "+query);
+		logInfo.info("input for searchEmployee method  :: "+query);
 		List<Employee> employeeList = empRepository.searchEmployee(query);
 		List<EmployeeResponse> employeeResponseList = constrctEmployeeResponseList(employeeList);
-		System.out.println("employeeResponseList :: "+employeeResponseList.size());
+		logInfo.info("employeeResponseList :: "+employeeResponseList.size());
 		return employeeResponseList;
 	}
 
@@ -142,8 +136,9 @@ public class EmployeeServiceImpl implements EmployeeService
 	{
 		Pageable pageable = PageRequest.of(pageNo,size);
 		Page<Employee> page = empRepository.findAll(pageable);
-		System.out.println(page.getSize());
+		logInfo.info("Page Size :: "+page.getSize());
 		List<Employee> employeeList = page.getContent();
+		logInfo.info("List Size :: "+employeeList.size());
 		List<EmployeeResponse> employeeResponseList = constrctEmployeeResponseList(employeeList);
 		return new PageImpl<EmployeeResponse>(employeeResponseList,pageable,page.getTotalElements());
 	}
