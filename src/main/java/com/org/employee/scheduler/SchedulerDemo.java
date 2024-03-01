@@ -18,7 +18,7 @@ public class SchedulerDemo
 	@Autowired
 	private EmployeeRepository repository;
 	
-	@Scheduled(cron = "10 51 13 29 2 4")
+//	@Scheduled(cron = "10 51 13 29 2 4")
 	public void m1()
 	{
 		System.out.println("Cron Job Running "+LocalDateTime.now());
@@ -29,7 +29,7 @@ public class SchedulerDemo
 		}
 	}
 	
-	@Scheduled(fixedRate = 2000)
+//	@Scheduled(fixedRate = 2000)
 	public void m2()
 	{
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss.SSS");

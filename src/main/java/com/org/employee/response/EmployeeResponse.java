@@ -5,7 +5,7 @@ public class EmployeeResponse
 	private long empId;
 	private String name;
 	private String designation;
-	private long contactNumber;
+	private String contactNumber;
 	private String joiningDate;
 	
 	public EmployeeResponse()
@@ -37,11 +37,11 @@ public class EmployeeResponse
 	{
 		this.designation = designation;
 	}
-	public long getContactNumber() 
+	public String getContactNumber() 
 	{
 		return contactNumber;
 	}
-	public void setContactNumber(long contactNumber) 
+	public void setContactNumber(String contactNumber) 
 	{
 		this.contactNumber = contactNumber;
 	}

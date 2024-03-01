@@ -11,7 +11,7 @@ public class EmployeeRequest {
 	@NotEmpty(message = "Designation Should not be empty")
 	private String designation;
 	
-	private long contactNumber;
+	private String contactNumber;
 
 	@NotBlank(message = "Joining Date should not be blank")
 	private String joiningDate;
@@ -36,11 +36,11 @@ public class EmployeeRequest {
 		this.designation = designation;
 	}
 
-	public long getContactNumber() {
+	public String getContactNumber() {
 		return contactNumber;
 	}
 
-	public void setContactNumber(long contactNumber) {
+	public void setContactNumber(String contactNumber) {
 		this.contactNumber = contactNumber;
 	}
 

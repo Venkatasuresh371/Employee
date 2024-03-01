@@ -21,7 +21,7 @@ public class Employee
 	@Column(name = "designation")
 	private String designation;
 	@Column(name = "contact_no")
-	private long contactNumber;
+	private String contactNumber;
 	@Column(name = "joining_date")
 	private LocalDateTime joiningDate;
 	
@@ -60,12 +60,12 @@ public class Employee
 		this.designation = designation;
 	}
 
-	public long getContactNumber() 
+	public String getContactNumber() 
 	{
 		return contactNumber;
 	}
 
-	public void setContactNumber(long contactNumber) 
+	public void setContactNumber(String contactNumber) 
 	{
 		this.contactNumber = contactNumber;
 	}
