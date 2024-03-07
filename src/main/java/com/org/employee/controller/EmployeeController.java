@@ -33,6 +33,12 @@ public class EmployeeController
 	@Autowired
 	private EmployeeService empService;
 	
+	@GetMapping("/")
+	public ResponseEntity<String> getData()
+	{
+		String string = "Welcome to Employee Data Management";
+		return new ResponseEntity<String>(string,HttpStatus.OK);
+	}
 	@PostMapping("/saveemployee")
 	public ResponseEntity<EmployeeResponse> saveEmployee(@Valid @RequestBody EmployeeRequest empRequest)
 	{
@@ -68,15 +74,16 @@ public class EmployeeController
 	public ResponseEntity<EmployeeResponse> getEmployeeByName(@PathVariable String name)
 	{
 		EmployeeResponse employeeResponse = empService.getEmployeeByName(name);
-		logInfo.info("Employee Response ---> "+employeeResponse);
+		logInfo.info("Employee Response ---> ",employeeResponse);
 		return new ResponseEntity<EmployeeResponse>(employeeResponse,HttpStatus.OK);
 	}
 	
 	@PutMapping("/updateemployee/{id}")
-	public ResponseEntity<EmployeeResponse> updateEmployee(@Valid @PathVariable long id,@RequestBody EmployeeRequest empRequest)
+	public ResponseEntity<EmployeeResponse> updateEmployee(@Valid @PathVariable long id,
+			@RequestBody EmployeeRequest empRequest)
 	{
 		EmployeeResponse updatedEmployeeResponse = empService.updateEmployee(id, empRequest);
-		logInfo.info("updatedEmployeeResponse ---> "+updatedEmployeeResponse);
+		logInfo.info("updatedEmployeeResponse ---> ",updatedEmployeeResponse);
 		return new ResponseEntity<EmployeeResponse>(updatedEmployeeResponse,HttpStatus.OK);
 	}
 	
@@ -91,12 +98,13 @@ public class EmployeeController
 	public ResponseEntity<List<EmployeeResponse>> searchEmployees(@RequestParam String query)
 	{
 		List<EmployeeResponse> employeeResponse = empService.searchEmployees(query);
-		logInfo.info("EmployeeResponse ---> "+employeeResponse);
+		logInfo.info("EmployeeResponse ---> ",employeeResponse);
 		return new ResponseEntity<List<EmployeeResponse>>(employeeResponse,HttpStatus.OK);
 	}
 	
 	@GetMapping("/getemployeebypage")
-	public ResponseEntity<Page<EmployeeResponse>> getEmployeeByPage(@RequestParam Integer pageNo,@RequestParam Integer pageSize)
+	public ResponseEntity<Page<EmployeeResponse>> getEmployeeByPage(@RequestParam Integer pageNo,
+			@RequestParam Integer pageSize)
 	{
 		Page<EmployeeResponse> page = empService.getPage(pageNo, pageSize);
 		return new ResponseEntity<Page<EmployeeResponse>>(page,HttpStatus.OK);

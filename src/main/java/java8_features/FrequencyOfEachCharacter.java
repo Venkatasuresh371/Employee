@@ -1,26 +1,31 @@
 package java8_features;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class FrequencyOfEachCharacter
 {
 	public static void main(String[] args)
 	{
-		Map<Character, Integer> map = new HashMap<Character, Integer>();
-		String s = "aasjjikkk";
-		for (int i = 0; i < s.length(); i++)
+		String s1 = "aasjjikkk";
+		String s2;
+		char c;
+		while(s1.length()>0)
 		{
-		    char c = s.charAt(i);
-		    Integer val = map.get(c);
-		    if (val != null) 
-		    {
-		        map.put(c, val + 1);
-		    }
-		    else 
-		    {
-		       map.put(c, 1);
-		   }
+			c = s1.charAt(0);
+			s2 = s1.replace(c+"","");
+			int count = s1.length()-s2.length();
+			System.out.println(c+" ---> "+count);
+			s1=s2;
 		}
+		System.out.println();
+		
+		String s3 = "suresh";
+		Map<Character, Long> collect = s3.chars()
+					.mapToObj(c1->(char)c1)
+					.collect(Collectors.groupingBy(Function.identity(),Collectors.counting()));
+		
+		System.out.println(collect);
 	}
 }
