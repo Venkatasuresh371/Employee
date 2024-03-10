@@ -29,7 +29,7 @@ import jakarta.validation.Valid;
 public class EmployeeController 
 {
 	private static final Logger logInfo = LoggerFactory.getLogger(EmployeeController.class);
-	
+
 	@Autowired
 	private EmployeeService empService;
 	
@@ -37,45 +37,45 @@ public class EmployeeController
 	public ResponseEntity<String> getData()
 	{
 		String string = "Welcome to Employee Data Management";
-		return new ResponseEntity<String>(string,HttpStatus.OK);
+		return new ResponseEntity<>(string,HttpStatus.OK);
 	}
 	@PostMapping("/saveemployee")
 	public ResponseEntity<EmployeeResponse> saveEmployee(@Valid @RequestBody EmployeeRequest empRequest)
 	{
-		logInfo.info("Employee Request ---> ",empRequest);
+		logInfo.info("Employee Request ---> "+empRequest);
 		
 		if(empRequest != null)
 		{
 			EmployeeResponse employeeResponse = empService.saveEmployee(empRequest);
-			logInfo.info("Employee Response ---> ",employeeResponse);
-			return new ResponseEntity<EmployeeResponse>(employeeResponse,HttpStatus.CREATED);
+			logInfo.info("Employee Response ---> "+employeeResponse);
+			return new ResponseEntity<>(employeeResponse, HttpStatus.CREATED);
 		}
-		return new ResponseEntity<EmployeeResponse>(HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 	
 	@GetMapping("/getallemployee")
 	public ResponseEntity<List<EmployeeResponse>> getAllEmployee()
 	{
 		List<EmployeeResponse> allEmployees = empService.getAllEmployee();
-		logInfo.info("Employee List Size ---> ",allEmployees.size());
-		return new ResponseEntity<List<EmployeeResponse>>(allEmployees,HttpStatus.OK);
+		logInfo.info("Employee List Size ---> "+allEmployees.size());
+		return new ResponseEntity<>(allEmployees, HttpStatus.OK);
 	}
 	
 	@GetMapping("/employeebyid/{id}")
 	public ResponseEntity<EmployeeResponse> getEmployeeById(@PathVariable long id)
 	{
-		logInfo.info("Employee Id ---> ",id);
+		logInfo.info("Employee Id ---> "+id);
 		EmployeeResponse employeeResponse = empService.getEmployeeById(id);
-		logInfo.info("Employee Response ---> ",employeeResponse);
-		return new ResponseEntity<EmployeeResponse>(employeeResponse,HttpStatus.OK);
+		logInfo.info("Employee Response ---> "+employeeResponse);
+		return new ResponseEntity<>(employeeResponse, HttpStatus.OK);
 	}
 	
 	@GetMapping("/employeebyname/{name}")
 	public ResponseEntity<EmployeeResponse> getEmployeeByName(@PathVariable String name)
 	{
 		EmployeeResponse employeeResponse = empService.getEmployeeByName(name);
-		logInfo.info("Employee Response ---> ",employeeResponse);
-		return new ResponseEntity<EmployeeResponse>(employeeResponse,HttpStatus.OK);
+		logInfo.info("Employee Response ---> "+employeeResponse);
+		return new ResponseEntity<>(employeeResponse,HttpStatus.OK);
 	}
 	
 	@PutMapping("/updateemployee/{id}")
@@ -83,30 +83,30 @@ public class EmployeeController
 			@RequestBody EmployeeRequest empRequest)
 	{
 		EmployeeResponse updatedEmployeeResponse = empService.updateEmployee(id, empRequest);
-		logInfo.info("updatedEmployeeResponse ---> ",updatedEmployeeResponse);
-		return new ResponseEntity<EmployeeResponse>(updatedEmployeeResponse,HttpStatus.OK);
+		logInfo.info("updatedEmployeeResponse ---> "+updatedEmployeeResponse);
+		return new ResponseEntity<>(updatedEmployeeResponse, HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/deleteemployee/{id}")
 	public ResponseEntity<String> deleteEmployee(@PathVariable long id)
 	{
 		String string = empService.deleteEmployee(id);
-		return new ResponseEntity<String>(string,HttpStatus.OK);
+		return new ResponseEntity<>(string,HttpStatus.OK);
 	}
 	
 	@GetMapping("/search")
 	public ResponseEntity<List<EmployeeResponse>> searchEmployees(@RequestParam String query)
 	{
 		List<EmployeeResponse> employeeResponse = empService.searchEmployees(query);
-		logInfo.info("EmployeeResponse ---> ",employeeResponse);
-		return new ResponseEntity<List<EmployeeResponse>>(employeeResponse,HttpStatus.OK);
+		logInfo.info("EmployeeResponse ---> "+employeeResponse);
+		return new ResponseEntity<>(employeeResponse, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/getemployeebypage")
-	public ResponseEntity<Page<EmployeeResponse>> getEmployeeByPage(@RequestParam Integer pageNo,
-			@RequestParam Integer pageSize)
+	public ResponseEntity<Page<EmployeeResponse>> getEmployeeByPage(@RequestParam int pageNo,
+																	@RequestParam int pageSize)
 	{
 		Page<EmployeeResponse> page = empService.getPage(pageNo, pageSize);
-		return new ResponseEntity<Page<EmployeeResponse>>(page,HttpStatus.OK);
+		return new ResponseEntity<>(page, HttpStatus.OK);
 	}
 }

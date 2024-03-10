@@ -31,7 +31,7 @@ public class EmployeeServiceImpl implements EmployeeService
 	@Override
 	public EmployeeResponse saveEmployee(EmployeeRequest empRequest)
 	{
-		logInfo.info("Employee Request in service ---> ",empRequest);
+		logInfo.info("Employee Request in service ---> "+empRequest);
 		Employee employee = constructEmployee(empRequest);
 		Employee saveEmployee = empRepository.save(employee);
 		EmployeeResponse employeeResponse = constructEmployeeResponse(saveEmployee);
@@ -69,7 +69,7 @@ public class EmployeeServiceImpl implements EmployeeService
 
 	private List<EmployeeResponse> constrctEmployeeResponseList(List<Employee> employeeList) 
 	{
-		List<EmployeeResponse> employeeResponseList = new ArrayList<EmployeeResponse>();
+		List<EmployeeResponse> employeeResponseList = new ArrayList<>();
 		for (Employee employee : employeeList) {
 			EmployeeResponse employeeResponse = constructEmployeeResponse(employee);
 			employeeResponseList.add(employeeResponse);
@@ -80,10 +80,9 @@ public class EmployeeServiceImpl implements EmployeeService
 	@Override
 	public EmployeeResponse getEmployeeById(long id) 
 	{
-		logInfo.info("getEmployeeById methood ---> ",id);
+		logInfo.info("getEmployeeById method ---> "+id);
 		Employee employee = empRepository.findByEmpId(id).orElseThrow(()->new EmployeeNotFoundException("Employee not found for the given employee id :: "+id));
-		EmployeeResponse employeeResponse = constructEmployeeResponse(employee);
-		return employeeResponse;
+        return constructEmployeeResponse(employee);
 	}
 
 	@Override
@@ -98,10 +97,9 @@ public class EmployeeServiceImpl implements EmployeeService
 	@Override
 	public EmployeeResponse updateEmployee(long id, EmployeeRequest empRequest) 
 	{
-		EmployeeResponse employeeResponse = null;
-		logInfo.info("id ---> ",id);
+		logInfo.info("id ---> "+id);
 		Employee oldEmployee = empRepository.findByEmpId(id).orElseThrow(()->new EmployeeNotFoundException("Employee not found for the given employee id :: "+id));
-		logInfo.info("Employee ---> ",oldEmployee.getempId());
+		logInfo.info("Employee ---> "+oldEmployee.getempId());
 		oldEmployee.setName(
 				empRequest.getName()!= null ? empRequest.getName():oldEmployee.getName());
 		oldEmployee.setContactNumber(
@@ -111,8 +109,8 @@ public class EmployeeServiceImpl implements EmployeeService
 			
 		Employee newEmployee = empRepository.save(oldEmployee);
 		
-		logInfo.info("after updating savedEmployee ---> ",newEmployee.getName());
-		employeeResponse = constructEmployeeResponse(newEmployee);
+		logInfo.info("after updating savedEmployee ---> "+newEmployee.getName());
+		EmployeeResponse employeeResponse = constructEmployeeResponse(newEmployee);
 		return employeeResponse;
 	}
 
@@ -127,7 +125,7 @@ public class EmployeeServiceImpl implements EmployeeService
 	@Override
 	public List<EmployeeResponse> searchEmployees(String query) 
 	{
-		logInfo.info("input for searchEmployee method ---> ",query);
+		logInfo.info("input for searchEmployee method ---> "+query);
 		List<Employee> employeeList = empRepository.searchEmployee(query);
 		List<EmployeeResponse> employeeResponseList = constrctEmployeeResponseList(employeeList);
 		logInfo.info("employeeResponseList ---> "+employeeResponseList.size());
@@ -139,10 +137,10 @@ public class EmployeeServiceImpl implements EmployeeService
 	{
 		Pageable pageable = PageRequest.of(pageNo,size);
 		Page<Employee> page = empRepository.findAll(pageable);
-		logInfo.info("Page Size ---> ",page.getSize());
+		logInfo.info("Page Size ---> "+page.getSize());
 		List<Employee> employeeList = page.getContent();
-		logInfo.info("List Size ---> ",employeeList.size());
+		logInfo.info("List Size ---> "+employeeList.size());
 		List<EmployeeResponse> employeeResponseList = constrctEmployeeResponseList(employeeList);
-		return new PageImpl<EmployeeResponse>(employeeResponseList,pageable,page.getTotalElements());
+		return new PageImpl<>(employeeResponseList,pageable,page.getTotalElements());
 	}
 }
