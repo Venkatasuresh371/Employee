@@ -22,10 +22,12 @@ import com.org.employee.request.EmployeeRequest;
 import com.org.employee.response.EmployeeResponse;
 import com.org.employee.service.EmployeeService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/employee")
+@Tag(name = "Employee")
 public class EmployeeController 
 {
 	private static final Logger logInfo = LoggerFactory.getLogger(EmployeeController.class);
@@ -33,7 +35,7 @@ public class EmployeeController
 	@Autowired
 	private EmployeeService empService;
 	
-	@GetMapping("/")
+	@GetMapping("/get")
 	public ResponseEntity<String> getData()
 	{
 		String string = "Welcome to Employee Data Management";
