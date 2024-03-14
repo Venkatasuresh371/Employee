@@ -44,6 +44,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler
 //			ObjectError error2 = allErrors.get(2);
 //			((FieldError) error2).getField();
 		});
-		return new ResponseEntity(errors, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
 	}
 }
