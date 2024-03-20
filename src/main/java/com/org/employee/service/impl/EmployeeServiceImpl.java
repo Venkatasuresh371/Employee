@@ -82,7 +82,8 @@ public class EmployeeServiceImpl implements EmployeeService
 	{
 		logInfo.info("getEmployeeById method ---> "+id);
 		Employee employee = empRepository.findByEmpId(id).orElseThrow(()->new EmployeeNotFoundException("Employee not found for the given employee id :: "+id));
-        return constructEmployeeResponse(employee);
+		EmployeeResponse employeeResponse = constructEmployeeResponse(employee);
+		return employeeResponse;
 	}
 
 	@Override
@@ -107,10 +108,10 @@ public class EmployeeServiceImpl implements EmployeeService
 		oldEmployee.setDesignation(
 				empRequest.getDesignation()!= null ? empRequest.getDesignation():oldEmployee.getDesignation());
 			
-		Employee newEmployee = empRepository.save(oldEmployee);
+		Employee employee = empRepository.save(oldEmployee);
 		
-		logInfo.info("after updating savedEmployee ---> "+newEmployee.getName());
-		EmployeeResponse employeeResponse = constructEmployeeResponse(newEmployee);
+		logInfo.info("after updating savedEmployee ---> "+employee.getName());
+		EmployeeResponse employeeResponse = constructEmployeeResponse(employee);
 		return employeeResponse;
 	}
 
@@ -133,9 +134,24 @@ public class EmployeeServiceImpl implements EmployeeService
 	}
 
 	@Override
-	public Page<EmployeeResponse> getPage(Integer pageNo, Integer size) 
+	public Page<EmployeeResponse> getPage(int pageNo, int size) 
 	{
 		Pageable pageable = PageRequest.of(pageNo,size);
+		Page<Employee> page = empRepository.findAll(pageable);
+		logInfo.info("Page Size ---> "+page.getSize());
+		List<Employee> employeeList = page.getContent();
+		logInfo.info("List Size ---> "+employeeList.size());
+		List<EmployeeResponse> employeeResponseList = constrctEmployeeResponseList(employeeList);
+		return new PageImpl<>(employeeResponseList,pageable,page.getTotalElements());
+	}
+
+	@Override
+	public Page<EmployeeResponse> getPage2(int pageNo)
+	{
+		int totalRecords = empRepository.findAll().size();
+		int totalPages = 10;
+		int recordsPerPage = (int) Math.ceil((double)totalRecords/totalPages);
+		Pageable pageable = PageRequest.of(pageNo,recordsPerPage);
 		Page<Employee> page = empRepository.findAll(pageable);
 		logInfo.info("Page Size ---> "+page.getSize());
 		List<Employee> employeeList = page.getContent();

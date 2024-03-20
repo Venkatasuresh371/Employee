@@ -23,6 +23,8 @@ public interface EmployeeService
 	
 	public List<EmployeeResponse> searchEmployees(String query);
 	
-	public Page<EmployeeResponse> getPage(Integer pageNo,Integer size);
+	public Page<EmployeeResponse> getPage(int pageNo,int size);
+	
+	public Page<EmployeeResponse> getPage2(int pageNo);
 
 }

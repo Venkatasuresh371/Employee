@@ -111,4 +111,10 @@ public class EmployeeController
 		Page<EmployeeResponse> page = empService.getPage(pageNo, pageSize);
 		return new ResponseEntity<>(page, HttpStatus.OK);
 	}
+	@GetMapping("/getemployeebypage2")
+	public ResponseEntity<Page<EmployeeResponse>> getEmployeeByPage(@RequestParam int pageNo)
+	{
+		Page<EmployeeResponse> page = empService.getPage2(pageNo);
+		return new ResponseEntity<>(page, HttpStatus.OK);
+	}
 }

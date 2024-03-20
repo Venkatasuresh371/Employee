@@ -19,5 +19,13 @@ public class Demo
 		
 	    Map<String, List<Employee>> map = l.stream().filter(e->e.getSalary()>=40000).collect(Collectors.groupingBy(Employee::getDept));
 		System.out.println(map);
+		
+		String s = """
+				java is awesome
+				java is oop programming language
+				java is awesome
+				""";
+		
+		System.out.println(s);
 	}
 }
