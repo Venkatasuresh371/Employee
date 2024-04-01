@@ -38,11 +38,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler
 			String fieldName = ((FieldError) error).getField();
 			String message = error.getDefaultMessage();
 			errors.put(fieldName, message);
-			
-			
-//			List<ObjectError> allErrors = ex.getBindingResult().getAllErrors();
-//			ObjectError error2 = allErrors.get(2);
-//			((FieldError) error2).getField();
 		});
 		return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
 	}
