@@ -51,7 +51,7 @@ public class EmployeeServiceImpl implements EmployeeService
 	private EmployeeResponse constructEmployeeResponse(Employee employee)
 	{
 		EmployeeResponse employeeResponse = new EmployeeResponse();
-		employeeResponse.setEmpId(employee.getempId());
+		employeeResponse.setEmpId(employee.getEmpId());
 		employeeResponse.setName(employee.getName());
 		employeeResponse.setDesignation(employee.getDesignation());
 		employeeResponse.setContactNumber(employee.getContactNumber());
@@ -100,7 +100,7 @@ public class EmployeeServiceImpl implements EmployeeService
 	{
 		logInfo.info("id ---> "+id);
 		Employee oldEmployee = empRepository.findByEmpId(id).orElseThrow(()->new EmployeeNotFoundException("Employee not found for the given employee id :: "+id));
-		logInfo.info("Employee ---> "+oldEmployee.getempId());
+		logInfo.info("Employee ---> "+oldEmployee.getEmpId());
 		oldEmployee.setName(
 				empRequest.getName()!= null ? empRequest.getName():oldEmployee.getName());
 		oldEmployee.setContactNumber(

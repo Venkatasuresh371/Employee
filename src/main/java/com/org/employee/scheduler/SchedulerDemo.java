@@ -25,7 +25,7 @@ public class SchedulerDemo
 		List<Employee> list = repository.findAll();
 		for (Employee employee : list) 
 		{
-			System.out.println(employee.getempId()+"--->"+employee.getName());
+			System.out.println(employee.getEmpId()+"--->"+employee.getName());
 		}
 	}
 	

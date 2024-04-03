@@ -26,11 +26,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler
 			EmployeeNotFoundException ex, WebRequest req) 
 	{
 		ErrorDetails details = new ErrorDetails(LocalDateTime.now(), ex.getMessage(), req.getDescription(false));
-		return new ResponseEntity<ErrorDetails>(details, HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(details, HttpStatus.NOT_FOUND);
 	}
 
 	@Override
-	protected ResponseEntity handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatusCode status, WebRequest request) 
 	{
 		Map<String, String> errors = new HashMap<String, String>();
