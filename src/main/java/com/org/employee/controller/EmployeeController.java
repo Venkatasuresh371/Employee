@@ -22,12 +22,10 @@ import com.org.employee.request.EmployeeRequest;
 import com.org.employee.response.EmployeeResponse;
 import com.org.employee.service.EmployeeService;
 
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/employee")
-@Tag(name = "Employee")
 public class EmployeeController 
 {
 	private static final Logger logInfo = LoggerFactory.getLogger(EmployeeController.class);

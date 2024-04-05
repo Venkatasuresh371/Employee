@@ -2,32 +2,16 @@ package com.org.employee.errors;
 
 import java.time.LocalDateTime;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ErrorDetails
 {
 	private LocalDateTime timeStamp;
 	private String message;
 	private String description;
-	
-	public ErrorDetails(LocalDateTime timeStamp, String message, String description) 
-	{
-		super();
-		this.timeStamp = timeStamp;
-		this.message = message;
-		this.description = description;
-	}
-
-	public LocalDateTime getTimeStamp() 
-	{
-		return timeStamp;
-	}
-
-	public String getMessage() 
-	{
-		return message;
-	}
-
-	public String getDescription() 
-	{
-		return description;
-	}
 }
